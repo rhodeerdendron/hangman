@@ -30,6 +30,7 @@ int main(int argc, char* argv[])
     std::cout << "read in " << corp.num_words() << " words from corpus" << std::endl;
 
     hangman game(corp.get_random_word(), 6);
+    int guesses = 0;
 
     // print header
     std::cout << "chosen word has "
@@ -59,6 +60,7 @@ int main(int argc, char* argv[])
             // ignore rest of line
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         } while (!game.guessed().is_unset(guess));
+        guesses++;
 
         // guess
         bool good = game.guess(guess);
@@ -79,8 +81,7 @@ int main(int argc, char* argv[])
     // print summary
     std::cout << "\n=========================\n\n";
     std::cout << "GAME " << (game.guesses_remaining()? "WON" : "LOST")
-        << " after " << (game.guesses_total() - game.guesses_remaining())
-        << " guesses!\n";
+        << " after " << guesses << " guesses!\n";
     std::cout << "word was: " << game.word() << "\n";
     return 0;
 }
